@@ -14,7 +14,7 @@ gather(`Biden`, `Booker`, `Sanders`, `Warren`, `Harris`,
        `Castro`, `Klobuchar`, `Bullock`, `Williamson`, `Bennet`, `deBlasio`, `Steyer`,
       key = "Candidate", value = "Percent")
       
-dat2 <-dat  %>% #ggplot doesn't support more than n() colors so remove 3 candidates:
+dat2 <-dat  %>% #ggplot doesn't support more than n() linetypes so remove 3 candidates:
 filter(Candidate != "Bennet")  %>% 
 filter(Candidate != "deBlasio")  %>% 
 filter(Candidate != "Steyer")
