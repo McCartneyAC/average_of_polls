@@ -31,9 +31,7 @@ dat_nested <- dat  %>%
   nest()
 
 candidate_model <- function(df) {
-    df  %>% 
-        mutate(date = as.numeric(mdy(date))-17532)  %>% 
-        loess(data=., Percent ~ date + house_effect)
+        loess(data=df, Percent ~ as.numeric(mdy(date)) + house_effect)
 }
 
 models <- map(dat_nested$data, candidate_model)
@@ -43,6 +41,43 @@ dat_nested <- dat_nested %>%
   
 dat_nested <- dat_nested %>% 
   mutate(
-    resid = map2(data, model, add_residuals)
-  ) #Why does this throw this error I did it exactly as hadley said to!?
-  
+    pred = map2(data, model, add_predictions)
+  )
+
+predictions <- dat_nested  %>% 
+    unnest(pred)
+
+predictions  %>% 
+    filter(Candidate != "Bennet")  %>% 
+    filter(Candidate != "deBlasio")  %>% 
+    filter(Candidate != "Steyer")  %>% 
+    filter(Candidate != "Delaney")  %>% 
+    ggplot(aes( 
+        x = mdy(.$date), y = pred, color = Candidate
+    )) + 
+    #geom_smooth(
+    #    aes(linetype = Candidate), 
+    #    method = "loess", 
+       # method = "lm"
+    #    span = .27
+    #) + 
+    #geom_line(aes(linetype = Candidate)) +
+    geom_point(alpha = 0.8, stroke = 0) +
+    #geom_jitter(alpha = 0.2) +
+    theme_light() + 
+   scale_color_manual(values = palate) +
+    labs(
+        title = "Average of Polls with error", 
+        subtitle = today(),
+        x = "Date") +
+    geom_vline(xintercept = as.numeric(as.Date("2019-06-27")), alpha = 0.3) + 
+    geom_vline(xintercept = as.numeric(as.Date("2019-07-31")), alpha = 0.3) + 
+    geom_vline(xintercept = as.numeric(as.Date("2019-09-12")), alpha = 0.3) + 
+    #geom_hline(yintercept = 26.5) +
+    scale_y_continuous(limits = c(0,40), 
+                      breaks = count_to_by(40,5) )+ 
+    scale_x_date(
+        #limits= c(as.Date("2019-03-1"), as.Date("2019-09-19")),
+        breaks = date_breaks("months"),
+      labels = date_format("%b")) + 
+    NULL
