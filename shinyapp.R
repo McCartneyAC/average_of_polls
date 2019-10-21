@@ -9,6 +9,7 @@ library(forcats)
 library(tidyverse)
 library(shinythemes)
 library(fontawesome)
+#library(anicon)
 
 rcp<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/master/rcp3.csv")
 
