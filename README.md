@@ -1,5 +1,6 @@
 # average_of_polls
 Average of Polls pulled from RCP but displayed with error
+[The Shiny App Version is Live Here.](https://acm9q.shinyapps.io/average_of_polls/)
 
 
 Eventual goal: used mixed-effects to correct for "House Effect" on polling error.
