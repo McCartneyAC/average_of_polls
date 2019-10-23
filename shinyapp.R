@@ -37,7 +37,7 @@ ui <- fluidPage(theme = shinytheme("flatly"),
       checkboxInput("debates", "Show Debate Dates", value = TRUE),
       checkboxInput("jitter", "Show Individual Points", value = FALSE),
       numericInput("zoomed", 
-                   h3("Zoom to Percent"), 
+                  "Zoom to Percent", 
                    value = 40),   
       helpText("Note: things get a bit weird if you zoom smaller than your leading candidate's best day, so toggle accordingly."),
       selectizeInput(
