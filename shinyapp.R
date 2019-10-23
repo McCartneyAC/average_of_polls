@@ -22,7 +22,8 @@ candid_list<-c("Bennet", "Biden", "Booker", "Bullock", "Buttigieg",
 dbts<-list(geom_vline(xintercept = as.numeric(as.Date("2019-06-27")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-07-31")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-09-12")),alpha = 0.3,size = 1) ,
-           geom_vline(xintercept = as.numeric(as.Date("2019-10-15")),alpha = 0.3,size = 1) )
+           geom_vline(xintercept = as.numeric(as.Date("2019-10-15")),alpha = 0.3,size = 1) ,
+           geom_vline(xintercept = as.numeric(as.Date("2019-11-20")),alpha = 0.3,size = 1) )
 
 ui <- fluidPage(theme = shinytheme("flatly"), 
   
