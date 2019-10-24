@@ -4,6 +4,7 @@ Average of Polls pulled from RCP but displayed with error
 
 
 Eventual goal: used mixed-effects to correct for "House Effect" on polling error.
+* [or use GAM with a covariate of the house effect for each poll result](https://stats.idre.ucla.edu/r/faq/how-can-i-explore-different-smooths-in-ggplot2/)
 
 
 Note that excel doc is structured to be copy/pasted into a jupyter notebook, not actually used for analysis directly becuase no IDE is available on a work computer. 
