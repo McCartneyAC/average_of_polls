@@ -16,9 +16,55 @@ rcp<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/ma
 candid_list<-c("Bennet", "Biden", "Booker", "Bullock", "Buttigieg",
                "Castro", "deBlasio", "Gabbard", "Harris",  "Klobuchar",
                 "ORourke","Sanders","Steyer", 
-               
-               
                "Warren", "Williamson",  "Yang")
+
+calc_dist <- function(x, y) {
+  distance <- function(x1, y1, x2, y2) {
+    c2 <- ((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
+    sqrt(c2)
+  }
+  candidates_list <- 	tribble(
+    ~candidate,~party,~leftright,~updown,
+    "Bennet","Democratic",8.5,6,
+    "Biden","Democratic",5.5,3.5,
+    "Booker","Democratic",4,2.5,
+    "Bullock","Democratic",5,5,
+    "Buttigieg","Democratic",6.5,4.5,
+    "Castro","Democratic",6.5,4.5,
+    "Deblasio","Democratic",1,1.5,
+    "Delaney","Democratic",4,3.5,
+    "Gabbard","Democratic",-1.5,-1.5,
+    "Gillibrand","Democratic",5,4.5,
+    "Gravel","Democratic",-0.5,-1.5,
+    "Harris","Democratic",5,4,
+    "Hickenlooper","Democratic",4.5,3,
+    "Inslee","Democratic",9,2,
+    "Klobuchar","Democratic",5,5,
+    "Moulton","Democratic",5.5,4,
+    "O'Rourke","Democratic",7,5.5,
+    "Ryan","Democratic",2.5,3,
+    "Sanders","Democratic",-1.5,-1,
+    "Sestak","Democratic",5.5,2,
+    "Warren","Democratic",0.5,1,
+    "Williamson","Democratic",2,-1.5,
+    "Yang","Democratic",7,1,
+    "Hawkins","Green",-5,-3,
+    "Vohra","Libertarian",10,1.5,
+    "Corker","Republican",10,8.5,
+    "Hogan","Republican",10,8,
+    "Kasich","Republican",8,9,
+    "Pence","Republican",10,8.5,
+    "Trump","Republican",8.5,8.5,
+    "Weld","Republican",9.5,4.5
+    
+  )
+  candidates_list %>%
+    mutate(dist = distance(x, y, .$leftright, .$updown)) %>%
+    arrange(dist) %>%
+    select(candidate, party, dist)
+}
+
+
 dbts<-list(geom_vline(xintercept = as.numeric(as.Date("2019-06-27")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-07-31")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-09-12")),alpha = 0.3,size = 1) ,
@@ -37,7 +83,7 @@ ui <- fluidPage(theme = shinytheme("flatly"),
       checkboxInput("debates", "Show Debate Dates", value = TRUE),
       checkboxInput("jitter", "Show Individual Points", value = FALSE),
       numericInput("zoomed", 
-                  "Zoom to Percent", 
+                   "Zoom to Percent", 
                    value = 40),   
       helpText("Note: things get a bit weird if you zoom smaller than your leading candidate's best day, so toggle accordingly."),
       selectizeInput(
@@ -46,7 +92,10 @@ ui <- fluidPage(theme = shinytheme("flatly"),
                      "Buttigieg", "Yang", "ORourke", "Gabbard", "Castro",
                      "Klobuchar", "Bullock", "Williamson")
       ), 
-      helpText("Note: You can't select more than 16 candidates.")
+      helpText("Note: You can't select more than 16 candidates."),
+      tags$br(),
+      tags$a(href = "https://github.com/McCartneyAC/average_of_polls/", 
+             fa("github", height = 25))
       
     ), #SidebarPanel
     
@@ -62,14 +111,60 @@ ui <- fluidPage(theme = shinytheme("flatly"),
                  tags$h4("The Eventual Goal"),
                  tags$p("Use mixed-effects to correct for 'House Effect' on polling error. However, this has so far eluded me as it may require me to switch from LOESS smoothing to a GAM or splines, both of which I'm reluctant to do. Here, the House Effect of each firm is taken from fivethirtyeight's dataset (see their github repo ",  tags$a(href = "https://github.com/fivethirtyeight/data/tree/master/pollster-ratings", "here"), " ). For Harris polling, the house effect is for both HarrisX and for Harvard Harris until I can figure out a discernment between the two. This is not meant to be a perfect statistical adjustment, just some additional variance to control for with the hope of quieting these effects. In this case, + is |+D| and - is |+R|."),
                  tags$br(), 
-                 tags$p(tags$h4("Some Technical Stuff:"), "(1) As noted above, the points for each poll are smoothed using local estimation. The key assumed parameter for this is the span, which I have set to 0.27 for the simple reason that higher spans made the polls look like public opinion changed only a monthly basis and a lower span made it seem as if public opinion changed whimsically with each passing news cycle. The assumption that this is false can and should be critiqued, but I have elected not to include a slider for LOESS span for the time being. To me, 0.27 seems just the right amount of wiggly.",tags$br(),tags$br(),"(2) The eager poll-watchers out there may note that Harris' jump from the first debate seems to start prior to that debate happening. This isn't an error--every poll happens over a span of days and I was faced with the decision about whether to code them based on their first day or their last day. Because on the day I began tracking the data I wanted to know about the response to a particular news cycle, I elected to use the day the poll began, in order to ensure that I was getting the first polls that were done only after that news cycle. I'm too set in my dataset now to change that, though again there are reasonable critiques for this decision.",tags$br(),tags$br(), "(3) Datapoints. Some firms don't poll on every candidate (*Cough cough SurveyUSA*) and this creates NAs in the dataset. RCP handles these by coding NAs as zero, which is obviously incorrect, but I can't reasonably be bothered to re-code every datapoint for 160+ polls. Additionally, some surveys give their datapoints in odd ways, e.g. '<1%', which I've chosen to code as 0.5. In general, everything is rounded to the nearest integer, which probably doesn't systematically bias the data but is certainly annoying."),
+                 tags$h4("Some Technical Stuff:"),
+                 tags$p( "(1) As noted above, the points for each poll are smoothed using local estimation. The key assumed parameter for this is the span, which I have set to 0.27 for the simple reason that higher spans made the polls look like public opinion changed only a monthly basis and a lower span made it seem as if public opinion changed whimsically with each passing news cycle. The assumption that this is false can and should be critiqued, but I have elected not to include a slider for LOESS span for the time being. To me, 0.27 seems just the right amount of wiggly.",tags$br(),tags$br(),"(2) The eager poll-watchers out there may note that Harris' jump from the first debate seems to start prior to that debate happening. This isn't an error--every poll happens over a span of days and I was faced with the decision about whether to code them based on their first day or their last day. Because on the day I began tracking the data I wanted to know about the response to a particular news cycle, I elected to use the day the poll began, in order to ensure that I was getting the first polls that were done only after that news cycle. I'm too set in my dataset now to change that, though again there are reasonable critiques for this decision.",tags$br(),tags$br(), "(3) Datapoints. Some firms don't poll on every candidate (*Cough cough SurveyUSA*) and this creates NAs in the dataset. RCP handles these by coding NAs as zero, which is obviously incorrect, but I can't reasonably be bothered to re-code every datapoint for 160+ polls. Additionally, some surveys give their datapoints in odd ways, e.g. '<1%', which I've chosen to code as 0.5. In general, everything is rounded to the nearest integer, which probably doesn't systematically bias the data but is certainly annoying."),
                  tags$br(), 
-                 tags$p(tags$a(href = "https://github.com/McCartneyAC/average_of_polls/", fa("github", height = 25), "to view the data, code, and contact me."))
+                 tags$p(tags$a(href = "https://github.com/McCartneyAC/average_of_polls/", 
+                               fa("github", height = 25), tags$br(), "to view the data, code, and contact me."))
                  ), #about
         tabPanel("See the Polls",
                  DTOutput('dt')
-        ) #see the polls
+        ), #see the polls
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        tabPanel("Political Compass", 
+                 tags$h2("But for whom should I vote?"),
+                 tags$p("I don't know. But ", tags$a(href = "https://www.politicalcompass.org/test", "politicalcompass.org"), "has a survey you can take and you can see where you line up with the candidates. If you've already taken their survey, here are the 2020 primary candidates mapped for you to see where you fall in relation to the field. Interestingly, Donald Trump and Bernie Sanders have both moved to be more toward the libertarian pole since the 2016 primary season."),
+                 fluidRow(
+                   tags$br(),
+                   column(4,numericInput("u_leftright", 
+                                       "Your Left / Right Score", 
+                                       value = 0, min = -10, max = 10),  
+                          numericInput("u_updown", 
+                                       "Your Authoritarian / Libertarian Score", 
+                                       value = 0, min = -10, max = 10),  
+                          actionButton("distance_button", "Calculate My Closest Candidate")
+                          ),
+                   helpText("Note: positive scores go up and to the right"),
+                   column(4,tags$img(src = "https://github.com/McCartneyAC/average_of_polls/blob/master/compass.png?raw=true")
+                          )
+                 ), #fluidrow
+                 fluidRow(
+                   DTOutput("user_dist_df")
+                 ) #fluidRow
+        ) # compass
       ) #tabset panel
     ) #main panel
   ) # sidebar layout
@@ -96,7 +191,7 @@ server <- function(input, output){
                           rownames = FALSE,
                           initComplete = JS(
                             "function(settings, json) {",
-                            "$(this.api().table().header()).css({'background-color': '#18bc9c', 'color': '#fff'});",
+                            "$(this.api().table().header()).css({'background-color': '#2c3e50', 'color': '#fff'});",
                             "}"
                           )
                         ) #list
@@ -145,8 +240,29 @@ server <- function(input, output){
   }, height = 550)
   
   
+
   
   
+  # user distance calc module
+  
+  u_leftrightR<-eventReactive(input$distance_button,{
+    input$u_leftright
+  })
+  u_updownR<-eventReactive(input$distance_button,{
+    input$u_updown
+  })
+  
+  user_distances<-reactive({ as.data.frame(calc_dist(u_leftrightR(), u_updownR()))})
+  
+  output$user_dist_df <- renderDT(user_distances(), 
+    options = list(
+      initComplete = JS(
+        "function(settings, json) {",
+        "$(this.api().table().header()).css({'background-color': '#2c3e50', 'color': '#fff'});",
+        "}"
+      )
+    )
+  )
   
 }
 
