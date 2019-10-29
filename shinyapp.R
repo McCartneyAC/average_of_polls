@@ -252,7 +252,11 @@ server <- function(input, output){
     input$u_updown
   })
   
-  user_distances<-reactive({ as.data.frame(calc_dist(u_leftrightR(), u_updownR()))})
+  user_distances<-reactive({ 
+    calc_dist(u_leftrightR(), u_updownR()) %>% 
+    as.data.frame() %>% 
+    mutate(dist = round(dist, digits = 2))
+    })
   
   output$user_dist_df <- renderDT(user_distances(), 
     options = list(
