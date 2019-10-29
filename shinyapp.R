@@ -69,7 +69,8 @@ dbts<-list(geom_vline(xintercept = as.numeric(as.Date("2019-06-27")),alpha = 0.3
            geom_vline(xintercept = as.numeric(as.Date("2019-07-31")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-09-12")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-10-15")),alpha = 0.3,size = 1) ,
-           geom_vline(xintercept = as.numeric(as.Date("2019-11-20")),alpha = 0.3,size = 1) )
+           geom_vline(xintercept = as.numeric(as.Date("2019-11-20")),alpha = 0.3,size = 1) ,
+           geom_vline(xintercept = as.numeric(as.Date("2019-12-19")),alpha = 0.3,size = 1) )
 
 ui <- fluidPage(theme = shinytheme("flatly"), 
   
@@ -120,30 +121,6 @@ ui <- fluidPage(theme = shinytheme("flatly"),
         tabPanel("See the Polls",
                  DTOutput('dt')
         ), #see the polls
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         tabPanel("Political Compass", 
                  tags$h2("But for whom should I vote?"),
                  tags$p("I don't know. But ", tags$a(href = "https://www.politicalcompass.org/test", "politicalcompass.org"), "has a survey you can take and you can see where you line up with the candidates. If you've already taken their survey, here are the 2020 primary candidates mapped for you to see where you fall in relation to the field. Interestingly, Donald Trump and Bernie Sanders have both moved to be more toward the libertarian pole since the 2016 primary season."),
@@ -212,7 +189,7 @@ server <- function(input, output){
       theme_light() +
       scale_color_manual(values = palate) +
       labs(title = "Average of Polls with error",
-           subtitle = "Updated Last: October 21, 2019",
+           subtitle = "Updated Last: October 29, 2019",
            x = "Date") +
       
       scale_y_continuous(limits = c(0, input$zoomed),
