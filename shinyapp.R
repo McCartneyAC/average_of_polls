@@ -10,7 +10,9 @@ library(tidyverse)
 library(shinythemes)
 library(fontawesome)
 library(DT)
-
+library(ggrepel)
+library(ggthemes)
+library(ggvoronoi)
 rcp<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/master/rcp3.csv")
 
 candid_list<-c("Bennet", "Biden", "Booker", "Bullock", "Buttigieg",
@@ -63,6 +65,32 @@ calc_dist <- function(x, y) {
     arrange(dist) %>%
     select(candidate, party, dist)
 }
+candidates_list_voronoi <- 	tribble(
+  ~candidate,~party,~leftright,~updown,
+  "Bennet","Democratic",8.5,6,
+  "Biden","Democratic",5.5,3.5,
+  "Booker","Democratic",4,2.5,
+  "Buttigieg/Castro","Democratic",6.5,4.5,
+  "Delaney","Democratic",4,3.5,
+  "Gabbard","Democratic",-1.5,-1.5,
+  "Harris","Democratic",5,4,
+  "Bullock/Klobuchar","Democratic",5,5,
+  "Sanders","Democratic",-1.5,-1,
+  "Sestak","Democratic",5.5,2,
+  "Warren","Democratic",0.5,1,
+  "Williamson","Democratic",2,-1.5,
+  "Yang","Democratic",7,1,
+  "Hawkins","Green",-5,-3,
+  "Vohra","Libertarian",10,1.5,
+  "Corker/Pence","Republican",10,8.5,
+  "Hogan","Republican",10,8,
+  "Kasich","Republican",9,8,
+  "Trump","Republican",8.5,8.5,
+  "Weld","Republican",9.5,4.5
+)
+outline.df <- data.frame(x = c(-10, 10, 10, -10),
+                         y = c(-10, -10, 10, 10)
+                         )
 
 
 dbts<-list(geom_vline(xintercept = as.numeric(as.Date("2019-06-27")),alpha = 0.3,size = 1) ,
@@ -123,22 +151,33 @@ ui <- fluidPage(theme = shinytheme("flatly"),
         ), #see the polls
         tabPanel("Political Compass", 
                  tags$h2("But for whom should I vote?"),
-                 tags$p("I don't know. But ", tags$a(href = "https://www.politicalcompass.org/test", "politicalcompass.org"), "has a survey you can take and you can see where you line up with the candidates. If you've already taken their survey, here are the 2020 primary candidates mapped for you to see where you fall in relation to the field. Interestingly, Donald Trump and Bernie Sanders have both moved to be more toward the libertarian pole since the 2016 primary season."),
                  fluidRow(
                    tags$br(),
-                   column(4,numericInput("u_leftright", 
+                   column(4,tags$p("I don't know. But ", tags$a(href = "https://www.politicalcompass.org/test", "politicalcompass.org"), "has a survey you can take and you can see where you line up with the candidates. If you've already taken their survey, here are the 2020 primary candidates mapped for you to see where you fall in relation to the field. Interestingly, Donald Trump and Bernie Sanders have both moved to be more toward the libertarian pole since the 2016 primary season."),
+                          numericInput("u_leftright", 
                                        "Your Left / Right Score", 
                                        value = 0, min = -10, max = 10),  
                           numericInput("u_updown", 
                                        "Your Authoritarian / Libertarian Score", 
                                        value = 0, min = -10, max = 10),  
+                          helpText("Note: positive scores go up and to the right"),
                           actionButton("distance_button", "Calculate My Closest Candidate")
                           ),
-                   helpText("Note: positive scores go up and to the right"),
-                   column(4,tags$img(src = "https://github.com/McCartneyAC/average_of_polls/blob/master/compass.png?raw=true")
+                   
+                   column(4,plotOutput("voronoise")
                           )
                  ), #fluidrow
                  fluidRow(
+                   tags$br(),
+                   tags$br(),
+                   tags$br(),
+                   tags$br(),
+                   tags$br(),
+                   tags$br(),
+                   tags$br(),
+                   tags$br(),
+                   tags$br(),
+                   tags$br(),
                    DTOutput("user_dist_df")
                  ) #fluidRow
         ) # compass
@@ -189,7 +228,7 @@ server <- function(input, output){
       theme_light() +
       scale_color_manual(values = palate) +
       labs(title = "Average of Polls with error",
-           subtitle = "Updated Last: October 29, 2019",
+           subtitle = "Updated Last: October 21, 2019",
            x = "Date") +
       
       scale_y_continuous(limits = c(0, input$zoomed),
@@ -245,7 +284,41 @@ server <- function(input, output){
     )
   )
   
+  
+  output$voronoise <- renderPlot({
+    
+    plt <- candidates_list_voronoi %>%
+      ggplot(aes(leftright, updown, label = candidate, fill = candidate)) +
+      geom_voronoi(outline = outline.df, color = "black") +
+      scale_x_continuous(limits = c(-10, 10), breaks = seq(-10, 10, 1)) +
+      scale_y_continuous(limits = c(-10, 10), breaks = seq(-10, 10, 1)) +
+      guides(fill = FALSE) +
+      geom_vline(xintercept = 0) +
+      geom_hline(yintercept = 0) +
+      geom_label_repel(alpha = 0.8) +
+      geom_point() +
+      theme_few() +
+      labs(
+        title = "Areas of 2016 Candidates",
+        subtitle = "Values from politicalcompass.org",
+        x = "Economic",
+        y = "Authoritarian",
+        caption = "Color blocks represent the area on the map wherein all points are closest to a given candidate"
+      ) +
+      scale_fill_tableau(palette = "Tableau 20")
+    
+    if (input$distance_button==0) {
+      plt
+    } else {
+      plt + geom_point(aes(x = u_leftrightR(), y = u_updownR()),colour = "red",size = 3)
+    }
+    
+  }, height = 600, width = 600) 
+  
 }
+
+
+
 
 
 
