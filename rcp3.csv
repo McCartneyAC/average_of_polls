@@ -1,4 +1,6 @@
 firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker,ORourke,Gabbard,Castro,Klobuchar,Bullock,Williamson,Bennet,deBlasio,Steyer,Delaney
+3,0.3,Economist/YouGov,11/3/2019,26,14,25,6,8,1,2,NA,3,3,2,1,1,0,NA,1,1
+9,-0.7,Monmouth,10/30/2019,23,20,23,5,9,3,3,NA,0,0,2,1,1,0,NA,1,0
 6,0.9,Harvard-Harris,10/29/2019,33,18,15,5,4,2,3,2,0,0,3,NA,1,NA,NA,1,0
 11,0.5,Politico/Morning Consult,10/28/2019,32,20,20,5,7,3,2,NA,2,1,2,1,1,1,NA,1,1
 1,1.5,ABC News/Wash Post,10/27/2019,28,17,23,2,9,2,2,1,2,1,2,0,0,1,NA,1,1
