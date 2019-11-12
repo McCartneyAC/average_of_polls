@@ -38,7 +38,7 @@ library(MASS)
 #
 ## Polling Data
 rcp<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/master/rcp3.csv")
-#rcp_state<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/master/datasets/rcp_statewide.csv")
+rcp_state<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/master/datasets/rcp_statewide.csv")
 
 candid_list<-c("Bennet", "Biden", "Booker", "Bullock", "Buttigieg",
                "Castro", "deBlasio", "Gabbard", "Harris",  "Klobuchar",
