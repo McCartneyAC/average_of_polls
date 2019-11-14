@@ -174,7 +174,7 @@ ui <- dashboardPage(skin = "black",
                                "logistic" = "logistic")
                  ),
                  #shinywidget
-                 materialSwitch(inputId = "rbst", label = "Robust Standard Errors"),
+                 materialSwitch(inputId = "rbst", label = "Robust Standard Errors", status = "primary"),
                  #wired_toggle(inputId = "rbst", label = "Robust Standard Errors"),
                  tags$p(tags$b("Select your variables for analysis:")),
                  selectInput(inputId = "responsevar",
