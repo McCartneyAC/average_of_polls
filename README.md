@@ -11,6 +11,9 @@ Eventual goals:
 
 
 TODO: 
+* Delegate map (earned)
+* General Election map (Polling)
+
 
 
 Note that excel doc is structured to be copy/pasted into a jupyter notebook, not actually used for analysis directly becuase no IDE is available on a work computer. 
