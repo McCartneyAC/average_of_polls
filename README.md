@@ -11,8 +11,7 @@ Eventual goals:
 
 
 TODO: 
-* change the candidate->color correspondence 
-* remove bullock and sestak and Harris
+
 
 Note that excel doc is structured to be copy/pasted into a jupyter notebook, not actually used for analysis directly becuase no IDE is available on a work computer. 
 
