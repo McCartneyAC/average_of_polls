@@ -1,4 +1,6 @@
 firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker,ORourke,Gabbard,Castro,Klobuchar,Bullock,Williamson,Bennet,deBlasio,Steyer,Delaney,Bloomberg,Patrick
+17,0.0,NPR/PBS/Marist,12/9/2019,24,22,17,NA,13,5,4,NA,1,1,4,NA,0,1,NA,0,NA,4,0.5
+5,0.9,FOX News,12/8/2019,30,20,13,NA,7,3,2,NA,3,1,5,NA,1,1,NA,1,NA,5,0
 3,0.3,Economist/YouGov,12/7/2019,26,16,21,NA,11,3,3,NA,3,1,2,NA,0,1,NA,1,0,4,0
 9,-0.7,Monmouth,12/4/2019,26,21,17,NA,8,3,2,NA,0,1,4,NA,0.5,0,NA,1,0,5,1
 12,0.5,Quinnipiac,12/4/2019,29,17,15,NA,9,4,1,NA,2,1,3,NA,1,1,NA,1,1,5,0
@@ -7,9 +9,9 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 15,0.9,The Hill/HarrisX,11/30/2019,31,15,10,2,9,2,1,NA,0,2,2,1,0,1,NA,2,1,6,1
 6,0.9,Harvard-Harris,11/27/2019,29,16,13,5,8,3,1,NA,1,0,2,NA,0,NA,NA,2,1,7,NA
 3,0.3,Economist/YouGov,11/24/2019,23,15,17,4,12,3,2,NA,2,1,3,1,1,0,NA,1,1,3,1
+2,0.1,CNN,11/21/2019,28,17,14,3,11,3,2,NA,0,1,2,0,0,0,NA,3,0,3,0
 11,0.5,Politico/Morning Consult,11/21/2019,30,21,15,5,9,4,2,NA,2,1,2,1,1,1,NA,2,1,2,0
 12,0.5,Quinnipiac,11/21/2019,24,13,14,3,16,2,2,NA,1,2,3,0,0,2,NA,0,0,3,0
-2,0.1,CNN,11/21/2019,28,17,14,3,11,3,2,NA,0,1,2,0,0,0,NA,3,0,3,0
 14,-0.3,SurveyUSA,11/20/2019,30,17,15,5,11,4,2,NA,1,1,2,NA,NA,NA,NA,2,0,3,0
 3,0.3,Economist/YouGov,11/17/2019,30,12,22,4,9,2,1,NA,3,0,2,1,0,1,NA,1,0,NA,0
 4,-1.8,Emerson,11/17/2019,27,27,20,3,7,4,1,NA,2,1,1,0,0,0,NA,2,0,1,0
@@ -22,19 +24,19 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 9,-0.7,Monmouth,10/30/2019,23,20,23,5,9,3,3,NA,0.5,0,2,0.5,0.5,0.5,NA,1,0,NA,NA
 6,0.9,Harvard-Harris,10/29/2019,33,18,15,5,4,2,3,2,0,0,3,NA,1,NA,NA,1,0,NA,NA
 11,0.5,Politico/Morning Consult,10/28/2019,32,20,20,5,7,3,2,NA,2,1,2,1,1,1,NA,1,1,NA,NA
-10,1.4,NBC News/Wall St. Jrnl,10/27/2019,27,19,23,4,6,3,2,1,2,1,5,NA,NA,1,NA,0,1,NA,NA
 1,1.5,ABC News/Wash Post,10/27/2019,28,17,23,2,9,2,2,1,2,1,2,0,0,1,NA,1,1,NA,NA
 3,0.3,Economist/YouGov,10/27/2019,27,14,23,4,7,3,1,4,2,1,2,0,0,1,NA,1,1,NA,NA
 5,0.9,FOX News,10/27/2019,31,19,21,3,7,3,2,2,2,0,2,0,0,0,NA,1,0,NA,NA
+10,1.4,NBC News/Wall St. Jrnl,10/27/2019,27,19,23,4,6,3,2,1,2,1,5,NA,NA,1,NA,0,1,NA,NA
 7,-1.4,IBD/TIPP,10/24/2019,29,13,23,2,7,3,1,1,0,1,3,NA,NA,0,NA,1,NA,NA,NA
 16,2,USA Today/Suffolk,10/23/2019,26,13,17,3,10,3,2,0,4,0,2,NA,NA,0,NA,1,NA,NA,NA
+8,0.7,LA Times/USC,10/21/2019,28,13,16,4,6,2,1,2,1,0,2,0,1,0,NA,1,0,NA,NA
 11,0.5,Politico/Morning Consult,10/21/2019,32,20,20,6,7,3,2,2,2,1,2,0,1,1,NA,1,1,NA,NA
 15,0.9,The Hill/HarrisX,10/21/2019,27,14,19,5,6,2,1,3,0,1,1,0,0,1,NA,1,0,NA,NA
-8,0.7,LA Times/USC,10/21/2019,28,13,16,4,6,2,1,2,1,0,2,0,1,0,NA,1,0,NA,NA
 3,0.3,Economist/YouGov,10/20/2019,24,16,23,5,8,3,3,2,2,1,2,0,1,1,NA,1,0,NA,NA
 4,-1.8,Emerson,10/18/2019,27,25,21,5,6,4,3,2,3,0,1,0,0,0,NA,1,0,NA,NA
-12,0.5,Quinnipiac,10/17/2019,21,15,28,5,10,1,1,1,1,1,3,0,0,0,NA,1,0,NA,NA
 2,0.1,CNN,10/17/2019,34,16,19,6,6,2,1,3,1,0,3,0,0,1,NA,1,0,NA,NA
+12,0.5,Quinnipiac,10/17/2019,21,15,28,5,10,1,1,1,1,1,3,0,0,0,NA,1,0,NA,NA
 11,0.5,Politico/Morning Consult,10/16/2019,31,18,21,7,6,3,2,2,1,1,2,1,1,1,NA,2,1,NA,NA
 11,0.5,Politico/Morning Consult,10/16/2019,30,18,21,6,6,3,3,3,1,1,2,1,1,1,NA,1,1,NA,NA
 14,-0.3,SurveyUSA,10/15/2019,32,17,22,7,5,2,2,2,1,1,2,NA,NA,NA,NA,1,NA,NA,NA
@@ -59,8 +61,8 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 5,0.9,FOX News,9/15/2019,29,18,16,7,5,2,3,4,0,0,2,NA,0,1,NA,1,1,NA,NA
 3,0.3,Economist/YouGov,9/14/2019,26,14,21,6,9,3,2,3,2,1,1,NA,1,1,NA,0,0,NA,NA
 10,1.4,NBC News/Wall St. Jrnl,9/13/2019,31,14,25,5,7,4,2,1,1,1,2,3,0,1,NA,1,1,NA,NA
-14,-0.3,SurveyUSA,9/13/2019,33,17,19,6,5,3,4,4,NA,1,1,NA,NA,NA,NA,NA,NA,NA,NA
 11,0.5,Politico/Morning Consult,9/13/2019,32,20,18,6,5,3,3,4,1,1,2,1,1,0,NA,1,1,NA,NA
+14,-0.3,SurveyUSA,9/13/2019,33,17,19,6,5,3,4,4,NA,1,1,NA,NA,NA,NA,NA,NA,NA,NA
 13,1.3,Reuters/Ipsos,9/9/2019,22,16,11,4,4,3,3,2,1,1,1,NA,0,0,NA,1,NA,NA,NA
 3,0.3,Economist/YouGov,9/8/2019,26,16,26,6,6,2,2,1,1,1,1,NA,1,1,0,0,0,NA,NA
 15,0.9,The Hill/HarrisX,9/7/2019,27,15,12,7,4,5,3,3,1,2,1,NA,0,1,NA,1,1,NA,NA
@@ -68,8 +70,8 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 1,1.5,ABC News/Wash Post,9/2/2019,29,19,18,7,4,3,1,3,2,0,2,NA,0,0,1,1,0,NA,NA
 11,0.5,Politico/Morning Consult,9/2/2019,33,21,16,7,5,3,3,3,1,1,1,NA,1,1,1,1,1,NA,NA
 3,0.3,Economist/YouGov,9/1/2019,26,14,22,5,5,3,1,1,3,1,0,0,1,1,2,0,1,NA,NA
-11,0.5,Politico/Morning Consult,8/26/2019,32,20,16,8,5,3,3,3,1,1,1,1,1,1,0,1,1,NA,NA
 6,0.9,Harvard-Harris,8/26/2019,32,16,13,7,4,2,3,4,1,1,1,NA,0,NA,NA,1,1,NA,NA
+11,0.5,Politico/Morning Consult,8/26/2019,32,20,16,8,5,3,3,3,1,1,1,1,1,1,0,1,1,NA,NA
 3,0.3,Economist/YouGov,8/24/2019,25,14,21,8,5,2,2,2,2,1,1,1,1,1,1,1,0,NA,NA
 4,-1.8,Emerson,8/24/2019,31,24,15,10,3,4,3,3,3,1,1,0,0,0,0,0,0,NA,NA
 15,0.9,The Hill/HarrisX,8/23/2019,30,17,14,4,4,2,2,3,1,1,1,2,1,1,0,1,0,NA,NA
@@ -80,18 +82,18 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 3,0.3,Economist/YouGov,8/17/2019,22,19,18,8,8,1,2,3,2,1,0,0,0,0,1,0,0,NA,NA
 9,-0.7,Monmouth,8/16/2019,19,20,20,8,4,3,4,2,1,2,1,0,2,0,1,0,0,NA,NA
 2,0.1,CNN,8/15/2019,29,15,14,5,5,1,2,3,2,2,1,1,0,0,0,1,0,NA,NA
-11,0.5,Politico/Morning Consult,8/12/2019,31,20,15,9,5,3,3,3,1,1,1,1,1,0,0,1,1,NA,NA
 8,0.7,LA Times/USC,8/12/2019,28,13,11,8,4,2,2,3,1,0,1,1,0,0,0,0,0,NA,NA
+11,0.5,Politico/Morning Consult,8/12/2019,31,20,15,9,5,3,3,3,1,1,1,1,1,0,0,1,1,NA,NA
 5,0.9,FOX News,8/11/2019,31,10,20,8,3,3,3,2,1,1,2,0,1,0,1,1,1,NA,NA
 3,0.3,Economist/YouGov,8/10/2019,23,16,20,8,6,2,2,5,2,1,1,0,1,1,1,1,0,NA,NA
 15,0.9,The Hill/HarrisX,8/9/2019,31,16,10,7,4,1,1,4,1,2,2,2,2,0,0,1,1,NA,NA
 11,0.5,Politico/Morning Consult,8/5/2019,33,20,14,9,5,2,3,3,1,1,1,1,1,1,0,1,1,NA,NA
 3,0.3,Economist/YouGov,8/3/2019,25,13,18,8,7,2,2,2,3,1,1,1,0,1,1,1,1,NA,NA
-12,0.5,Quinnipiac,8/1/2019,32,14,21,7,5,1,2,2,1,1,1,0,0,0,0,0,0,NA,NA
-14,-0.3,SurveyUSA,8/1/2019,33,20,19,9,8,0,1,1,0,0,1,0,0,0,0,0,0,NA,NA
 11,0.5,Politico/Morning Consult,8/1/2019,33,19,15,9,6,2,3,3,1,1,1,1,1,0,0,1,1,NA,NA
 11,0.5,Politico/Morning Consult,8/1/2019,32,18,15,10,6,2,3,3,1,1,1,0,1,0,0,1,1,NA,NA
+12,0.5,Quinnipiac,8/1/2019,32,14,21,7,5,1,2,2,1,1,1,0,0,0,0,0,0,NA,NA
 13,1.3,Reuters/Ipsos,8/1/2019,25,20,10,7,5,2,3,2,1,1,1,0,0,0,1,0,0,NA,NA
+14,-0.3,SurveyUSA,8/1/2019,33,20,19,9,8,0,1,1,0,0,1,0,0,0,0,0,0,NA,NA
 6,0.9,Harvard-Harris,7/31/2019,34,17,8,9,4,1,2,3,0,1,1,NA,0,NA,NA,1,0,NA,NA
 3,0.3,Economist/YouGov,7/27/2019,26,13,20,11,6,1,3,2,2,2,0,0,0,0,0,0,1,NA,NA
 4,-1.8,Emerson,7/27/2019,33,20,14,11,6,2,0,4,1,1,0,0,0,0,1,2,1,NA,NA
@@ -106,15 +108,15 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 8,0.7,LA Times/USC,7/12/2019,28,11,10,10,5,1,1,3,0,1,1,0,0,0,1,0,0,NA,NA
 15,0.9,The Hill/HarrisX,7/12/2019,29,16,9,11,1,0,1,3,1,1,1,1,0,0,1,0,1,NA,NA
 11,0.5,Politico/Morning Consult,7/8/2019,32,19,14,13,5,2,2,3,1,1,1,1,0,1,0,NA,1,NA,NA
-10,1.4,NBC News/Wall St. Jrnl,7/7/2019,26,13,19,13,7,2,1,2,0,1,1,0,1,1,0,NA,1,NA,NA
 3,0.3,Economist/YouGov,7/7/2019,22,12,18,15,6,1,2,1,3,2,1,1,0,0,1,NA,0,NA,NA
+10,1.4,NBC News/Wall St. Jrnl,7/7/2019,26,13,19,13,7,2,1,2,0,1,1,0,1,1,0,NA,1,NA,NA
 4,-1.8,Emerson,7/6/2019,30,15,15,15,5,3,2,4,2,0,1,1,0,1,0,NA,0,NA,NA
 11,0.5,Politico/Morning Consult,7/1/2019,31,19,13,14,6,1,2,3,1,1,1,1,1,0,1,NA,1,NA,NA
 3,0.3,Economist/YouGov,6/30/2019,23,9,19,15,8,1,2,2,1,1,0,1,0,1,0,NA,0,NA,NA
 15,0.9,The Hill/HarrisX,6/29/2019,33,15,9,11,6,1,2,4,1,1,0,1,0,1,0,NA,0,NA,NA
+1,1.5,ABC News/Wash Post,6/28/2019,30,19,12,13,4,0,1,2,1,3,2,0,1,1,0,NA,0,NA,NA
 2,0.1,CNN,6/28/2019,22,14,15,17,4,1,3,3,1,1,2,0,0,0,1,NA,0,NA,NA
 12,0.5,Quinnipiac,6/28/2019,22,13,14,20,4,1,3,1,1,1,1,0,0,0,0,NA,0,NA,NA
-1,1.5,ABC News/Wash Post,6/28/2019,30,19,12,13,4,0,1,2,1,3,2,0,1,1,0,NA,0,NA,NA
 13,1.3,Reuters/Ipsos,6/28/2019,24,17,11,11,4,3,1,3,0,1,1,1,0,0,0,NA,0,NA,NA
 11,0.5,Politico/Morning Consult,6/27/2019,33,19,12,12,6,2,3,2,1,1,1,1,0,0,1,NA,1,NA,NA
 6,0.9,Harvard-Harris,6/26/2019,34,15,11,9,3,1,3,2,2,1,1,NA,0,NA,NA,NA,1,NA,NA
@@ -137,8 +139,8 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 11,0.5,Politico/Morning Consult,5/27/2019,38,19,10,7,7,1,3,4,1,1,1,1,1,1,1,NA,1,NA,NA
 11,0.5,Politico/Morning Consult,5/20/2019,38,20,9,7,7,1,3,4,1,1,1,1,1,1,0,NA,1,NA,NA
 15,0.9,The Hill/HarrisX,5/17/2019,33,14,8,6,6,1,1,5,0,1,1,0,0,0,0,NA,0,NA,NA
-12,0.5,Quinnipiac,5/16/2019,35,16,13,8,5,1,3,2,1,1,2,0,0,0,0,NA,0,NA,NA
 9,-0.7,Monmouth,5/16/2019,33,15,10,11,6,1,1,4,1,1,3,0,1,0,1,NA,0,NA,NA
+12,0.5,Quinnipiac,5/16/2019,35,16,13,8,5,1,3,2,1,1,2,0,0,0,0,NA,0,NA,NA
 11,0.5,Politico/Morning Consult,5/13/2019,39,19,9,8,6,1,3,4,1,1,1,1,0,1,1,NA,1,NA,NA
 5,0.9,FOX News,5/11/2019,35,17,9,5,6,1,3,4,1,2,2,0,1,0,NA,NA,1,NA,NA
 4,-1.8,Emerson,5/10/2019,33,25,10,10,8,1,1,3,1,2,1,NA,0,1,NA,NA,0,NA,NA
@@ -155,9 +157,9 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 11,0.5,Politico/Morning Consult,4/8/2019,31,23,7,9,7,1,4,8,1,1,2,1,NA,NA,NA,NA,1,NA,NA
 15,0.9,The Hill/HarrisX,4/5/2019,36,19,6,9,4,1,6,7,0,1,2,NA,NA,NA,NA,NA,0,NA,NA
 11,0.5,Politico/Morning Consult,4/1/2019,32,23,7,9,5,1,4,8,1,1,2,1,NA,NA,NA,NA,1,NA,NA
-11,0.5,Politico/Morning Consult,3/25/2019,33,25,7,8,3,NA,4,8,1,1,2,1,NA,NA,NA,NA,1,NA,NA
 6,0.9,Harvard-Harris,3/25/2019,35,17,6,5,2,1,4,7,2,1,2,NA,NA,NA,NA,NA,NA,NA,NA
 6,0.9,Harvard-Harris,3/25/2019,26,18,5,11,2,2,3,5,0,1,1,NA,NA,NA,NA,NA,NA,NA,NA
+11,0.5,Politico/Morning Consult,3/25/2019,33,25,7,8,3,NA,4,8,1,1,2,1,NA,NA,NA,NA,1,NA,NA
 12,0.5,Quinnipiac,3/21/2019,29,19,4,8,4,0,2,12,0,1,2,NA,0,NA,NA,NA,NA,NA,NA
 11,0.5,Politico/Morning Consult,3/18/2019,35,25,7,8,2,NA,4,8,1,1,2,1,NA,NA,NA,NA,1,NA,NA
 4,-1.8,Emerson,3/17/2019,26,26,8,12,3,1,3,11,1,1,1,NA,NA,NA,NA,NA,NA,NA,NA
@@ -183,8 +185,8 @@ firm_id,house_effect,firm,date,Biden,Sanders,Warren,Harris,Buttigieg,Yang,Booker
 11,0.5,Politico/Morning Consult,1/11/2019,32,15,9,6,NA,NA,2,8,NA,0,1,NA,NA,NA,NA,NA,NA,NA,NA
 11,0.5,Politico/Morning Consult,1/4/2019,27,16,4,3,NA,NA,3,7,NA,0,2,NA,NA,NA,NA,NA,NA,NA,NA
 11,0.5,Politico/Morning Consult,12/14/2018,25,15,3,3,NA,NA,3,8,NA,1,1,NA,NA,NA,NA,NA,NA,NA,NA
-4,-1.8,Emerson,12/6/2018,26,22,7,9,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 2,0.1,CNN,12/6/2018,30,14,3,4,NA,NA,5,9,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+4,-1.8,Emerson,12/6/2018,26,22,7,9,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 6,0.9,Harvard-Harris,11/25/2018,28,21,5,3,NA,NA,4,7,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 6,0.9,Harvard-Harris,11/25/2018,25,15,4,2,NA,NA,3,9,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
 11,0.5,Politico/Morning Consult,11/7/2018,26,19,5,4,NA,NA,3,8,NA,1,1,NA,NA,NA,NA,NA,NA,NA,NA
