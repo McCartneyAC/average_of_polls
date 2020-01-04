@@ -3,13 +3,15 @@ source("global.R") # required for average of polls
 #source("functions.R") # required for regression
 ui <- dashboardPage(skin = "black",
   dashboardHeader(title = "Back of the Envelope"),
-  dashboardSidebar(tags$br(),
+  dashboardSidebar(
+    sidebarMenu(id = "sidebar",
+                tags$br(),
                    menuItem("About", tabName = "grand_about", icon = icon("book")),
                    tags$br(),
                    tags$h3("2020 Election:"),
                    menuItem("National Polls", tabName = "natl_polls", icon = icon("line-chart")), #globe
                    menuItem("Primary/Caucus", tabName = "prim_cauc", icon = icon("area-chart"),
-                            badgeLabel = "pending", badgeColor = "red"),
+                            badgeLabel = "new", badgeColor = "green"),
                    menuItem("Political Compass", tabName = "p_compass", icon = icon("compass")),
                    menuItem("Modal Voter", tabName = "modal_voter", icon = icon("address-card"),
                             badgeLabel = "pending", badgeColor = "red"),
@@ -20,11 +22,13 @@ ui <- dashboardPage(skin = "black",
                    menuItem("Data Set", tabName = "reg_data", icon = icon("superscript")),
                    menuItem("Describe", tabName = "reg_desc", icon = icon("list-ol")),
                    menuItem("Correlation", tabName = "reg_cor", icon = icon("th")),
-                   menuItem("Plot", tabName = "reg_plot", icon = icon("line-chart")),
+                   menuItem("Plot", tabName = "reg_plot", icon = icon("line-chart"),
+                            badgeLabel = "partial", badgeColor = "orange"),
                    menuItem("Summary", tabName = "reg_sum", icon = icon("list")),
                    menuItem("Outliers", tabName = "reg_outlier", icon = icon("sliders"),
                             badgeLabel = "pending", badgeColor = "red")
-                   ),
+    )# sidebarmenu
+                   ), #sidebar 
   dashboardBody(
     tabItems(
       
@@ -32,11 +36,12 @@ ui <- dashboardPage(skin = "black",
       #masthead
       tabItem(tabName = "grand_about", 
               box(title = "About", 
-                  tags$p("Back of the Envelope is the culmination of two (and maybe more?) project ideas that I have worked on in the year 2019. When I first learned to use Shiny R, I couldn't get the idea out of my head that someone should built a point and click style regression tool that utilized all and only those presets that I found helpful and that gave its output in ways that I tended to use when doing homework or preparing presentations and publications. Several extant R packages were outputting results in APA format our otherwise had defaults that were best-in-the-industry for a grad student. After leaving grad school, I put this idea into practice. The original version used wired.js and R's xkcd package to make all regression plots and fonts look hand-drawn. In this iteration, I have restored defaults so you can use it directly in publications. You're welcome. But I do miss the sketchiness."),
+                  tags$p("Back of the Envelope is the culmination of two (and maybe more?) project ideas that I have worked on in the year 2019. When I first learned to use Shiny R, I couldn't get the idea out of my head that someone should build a point-and-click style regression tool that utilized all and only those presets that I found helpful and that gave its output in ways that I tended to use when doing homework or preparing presentations and publications. Several extant R packages were outputting results in APA format our otherwise had defaults that were best-in-the-industry for a grad student. After leaving grad school, I put this idea into practice. The original version used wired.js and R's xkcd package to make all regression plots and fonts look hand-drawn. In this iteration, I have restored defaults so you can use it directly in publications. You're welcome...but I do miss the sketchiness."),
                   tags$p("A few months later, I began obsessively following 2020 democratic nomination polls and eventually I got annoyed with all the most popular trackers' issues: no error bars, too wiggly, not displaying enough candidates, can't zoom, etc. Eventually I started plotting the data myself, and it turned into a shiny app."), 
                   tags$p("What the two ideas have in common is a dangerous amount of statistical sophistication: enough to give it a strong semblance of accuracy, but leaving out the super technical details that might be important for research publication. Back of the Envelope regression is good enough for stat homework and basic pubs. Back of the Envelope 2020 Polling is good for getting a sense of the field that's less sensationalized than what you see on other sites. Neither project is polished, hence the overarching title.")),
               box(title= "Credit",
-                  tags$p("Back of the Envelope was built with myriad R packages, among them: Shiny & shinydashboard,  DT, psych, SjPlot, MASS, mccrr, and the tidyverse.")
+                  tags$p("Back of the Envelope was built with myriad R packages, among them: Shiny & shinydashboard,  DT, psych, SjPlot, MASS, mccrr, and the tidyverse."), 
+                  socialButton(url = "https://github.com/McCartneyAC/average_of_polls/", type = "github")
                   )#box
               ), #tabItem
       
@@ -60,14 +65,11 @@ ui <- dashboardPage(skin = "black",
                          leading candidate's best day, so toggle accordingly."),
                 selectizeInput(
                   'candids', 'Filter Candidates', choices = candid_list, multiple = TRUE, 
-                  selected = c("Biden", "Booker", "Sanders", "Warren", "Harris",
-                               "Buttigieg", "Yang", "Gabbard", "Castro",
-                               "Klobuchar", "Bullock", "Williamson")
+                  selected = c("Biden",  "Booker", "Bloomberg", "Buttigieg", 
+                               "Gabbard", "Klobuchar","Sanders", 
+                               "Warren","Williamson", "Yang")
                 ), 
-                helpText("Note: You can't select more than 16 candidates."),
-                tags$br(),
-                tags$a(href = "https://github.com/McCartneyAC/average_of_polls/", 
-                       fontawesome::fa("github", height = 25))
+                helpText("Note: You can't select more than 16 candidates.")
 
                 ), #box for controls
             tabBox(
@@ -86,11 +88,8 @@ ui <- dashboardPage(skin = "black",
                        tags$p("Use mixed-effects to correct for 'House Effect' on polling error. However, this has so far eluded me as it may require me to switch from LOESS smoothing to a GAM or splines, both of which I'm reluctant to do. Here, the House Effect of each firm is taken from fivethirtyeight's dataset (see their github repo ",  tags$a(href = "https://github.com/fivethirtyeight/data/tree/master/pollster-ratings", "here"), " ). For Harris polling, the house effect is for both HarrisX and for Harvard Harris until I can figure out a discernment between the two. This is not meant to be a perfect statistical adjustment, just some additional variance to control for with the hope of quieting these effects. In this case, + is |+D| and - is |+R|."),
                        tags$br(), 
                        tags$h4("Some Technical Stuff:"),
-                       tags$p( "(1) As noted above, the points for each poll are smoothed using local estimation. The key assumed parameter for this is the span, which I have set to 0.27 for the simple reason that higher spans made the polls look like public opinion changed only a monthly basis and a lower span made it seem as if public opinion changed whimsically with each passing news cycle. The assumption that this is false can and should be critiqued, but I have elected not to include a slider for LOESS span for the time being. To me, 0.27 seems just the right amount of wiggly.",tags$br(),tags$br(),"(2) The eager poll-watchers out there may note that Harris' jump from the first debate seems to start prior to that debate happening. This isn't an error--every poll happens over a span of days and I was faced with the decision about whether to code them based on their first day or their last day. Because on the day I began tracking the data I wanted to know about the response to a particular news cycle, I elected to use the day the poll began, in order to ensure that I was getting the first polls that were done only after that news cycle. I'm too set in my dataset now to change that, though again there are reasonable critiques for this decision.",tags$br(),tags$br(), "(3) Datapoints. Some firms don't poll on every candidate (*Cough cough SurveyUSA*) and this creates NAs in the dataset. RCP handles these by coding NAs as zero, which is obviously incorrect, but I can't reasonably be bothered to re-code every datapoint for 160+ polls. Additionally, some surveys give their datapoints in odd ways, e.g. '<1%', which I've chosen to code as 0.5. In general, everything is rounded to the nearest integer, which probably doesn't systematically bias the data but is certainly annoying."),
-                       tags$br(), 
-                       tags$p(tags$a(href = "https://github.com/McCartneyAC/average_of_polls/", 
-                                     fontawesome::fa("github", height = 25), tags$br(), "to view the data, code, and contact me."))
-),
+                       tags$p( "(1) As noted above, the points for each poll are smoothed using local estimation. The key assumed parameter for this is the span, which I have set to 0.27 for the simple reason that higher spans made the polls look like public opinion changed only a monthly basis and a lower span made it seem as if public opinion changed whimsically with each passing news cycle. The assumption that this is false can and should be critiqued, but I have elected not to include a slider for LOESS span for the time being. To me, 0.27 seems just the right amount of wiggly. Also, it seems to do the best job of reducing error around Harris' rise and fall after the first debate, so that gives me confidence it's operating on the right time scale.",tags$br(),tags$br(),"(2) The eager poll-watchers out there may note that Harris' jump from the first debate seems to start prior to that debate happening. This isn't an error--every poll happens over a span of days and I was faced with the decision about whether to code them based on their first day or their last day. Because on the day I began tracking the data I wanted to know about the response to a particular news cycle, I elected to use the day the poll began, in order to ensure that I was getting the first polls that were done only after that news cycle. I'm too set in my dataset now to change that, though again there are reasonable critiques for this decision.",tags$br(),tags$br(), "(3) Datapoints. Some firms don't poll on every candidate (*Cough cough SurveyUSA*) and this creates NAs in the dataset. RCP handles these by coding NAs as zero, which is obviously incorrect, but I can't reasonably be bothered to re-code every datapoint for 160+ polls. Additionally, some surveys give their datapoints in odd ways, e.g. '<1%', which I've chosen to code as 0.5. In general, everything else is rounded to the nearest integer, which probably doesn't systematically bias the data but is certainly annoying.")
+                       ),
               tabPanel("Democratic Primary Polls",
                        DTOutput('dt'))
             ) # tabBox national polls
@@ -102,7 +101,45 @@ ui <- dashboardPage(skin = "black",
 
 
     # # Primary and Caucus
-    tabItem(tabName = "prim_cauc"),   
+    tabItem(tabName = "prim_cauc",
+            box(title = "Controls", width = 3,
+                # input$candids_state
+                # input$state_state
+                # input$zoomed_state
+                # input$stardate_state
+                selectInput("state_state", "Select your Primary/Caucus State:", 
+                            c("Iowa", "Nevada ", "New Hampshire","South Carolina"), 
+                            selected = "Iowa"),
+                dateInput("stardate_state", 
+                          "Start Date", 
+                          value = "2019-01-01"),
+                numericInput("zoomed_state", 
+                             "Zoom to Percent", 
+                             value = 75),   
+                helpText("Note: things get a bit weird if you zoom smaller than your 
+                         leading candidate's best day, so toggle accordingly."),
+                selectizeInput(
+                  'candids_state', 'Filter Candidates', choices = candid_list, multiple = TRUE, 
+                  selected = c("Biden", "Booker", "Sanders", "Warren", "Harris",
+                               "Buttigieg", "Yang", "Gabbard")
+                ), #selectize
+                helpText("Note: You can't select more than 16 candidates.")
+            ),             
+            tabBox(
+              title = "Primary / Caucus Poll Averages",
+              id = "state_polls_tab",
+              height = "700px",
+              width =9,
+              tabPanel("State Primary Poll Averages",
+                       helpText("Note: Smoothing fails with too few datapoints. Don't overinterpret."), 
+                       plotOutput("stateplt")),
+              tabPanel("Democratic Primary Polls",
+                       DTOutput('dt_state'))
+            ) #tabbox
+
+            
+            
+            ), #tabitem state polls   
 
 
 
@@ -153,13 +190,7 @@ ui <- dashboardPage(skin = "black",
     
     
     
-    
-    
-    
-    
-    
-    
-    
+
     
     # Regression
     # # About
@@ -174,7 +205,7 @@ ui <- dashboardPage(skin = "black",
                                "logistic" = "logistic")
                  ),
                  #shinywidget
-                 materialSwitch(inputId = "rbst", label = "Robust Standard Errors", status = "primary"),
+                 materialSwitch(inputId = "rbst", label = "Robust Standard Errors"),
                  #wired_toggle(inputId = "rbst", label = "Robust Standard Errors"),
                  tags$p(tags$b("Select your variables for analysis:")),
                  selectInput(inputId = "responsevar",
@@ -197,8 +228,6 @@ ui <- dashboardPage(skin = "black",
                                "Multilevel / LME / HLM"),
                    selected = NA
                  ), 
-                 tags$br(), 
-                 tags$br(),
                  selectInput(inputId = "clust",
                              label = "Cluster Varibale: (coming soon)", 
                              choices = NULL
@@ -280,14 +309,17 @@ server <- function(input, output, session) {
   # 2020 Election:
   rcp2 <- rcp  %>% 
     gather(`Biden`, `Booker`, `Sanders`, `Warren`, `Harris`, 
-           `Buttigieg`, `Yang`, `ORourke`, `Gabbard`, `Delaney`,
+           `Buttigieg`, `Yang`, `ORourke`, `Gabbard`, `Delaney`, `Patrick`, `Bloomberg`,
            `Castro`, `Klobuchar`, `Bullock`, `Williamson`, `Bennet`, `deBlasio`, `Steyer`, 
            key = "Candidate", value = "Percent")  
   
-  palate<-c( "#115740",  "#b9975b",  "#00b388",  "#cab64b", 
-             "#64ccc9",  "#789D4a",  "#789f90",  "#5b6770", 
-             "#f0b323",  "#83434e",  "#e56a54",  "#183028", 
-             "#00313c",  "#cc5500")
+  rcp_state2<-rcp_state  %>%  
+    gather(`Biden`, `Booker`, `Sanders`, `Warren`, `Harris`, 
+           `Buttigieg`, `Yang`, `O'Rourke`, `Gabbard`, 
+           `Castro`, `Klobuchar`,   `Bennet`,  `Steyer`, `Sestak`,
+           key = "Candidate", value = "Percent")  
+  
+
   
   output$dt <- renderDT(rcp,
                         options = list(
@@ -295,7 +327,14 @@ server <- function(input, output, session) {
                           scrollX = TRUE,
                           rownames = FALSE
                         )) #renderDT
-  
+  output$dt_state<-renderDT(
+    rcp_state, 
+    options = list(
+      lengthChange = TRUE,
+      scrollX = TRUE,
+      rownames = FALSE
+    ) #renderDTState
+  )
   
   output$plt <- renderPlot({
     p <- rcp2  %>%
@@ -338,6 +377,38 @@ server <- function(input, output, session) {
     
   }, height = 550)
   
+
+  output$stateplt <- renderPlot({
+    rcp_state2 %>% 
+      filter(Candidate %in% input$candids_state) %>% 
+      filter(state == input$state_state) %>% 
+      ggplot(aes(
+        x = mdy(.$Date), 
+        y = Percent, 
+        color = Candidate
+      )) + geom_smooth(aes(linetype = Candidate),
+                       method = "loess",
+                       span = .3) +
+      theme_light() +
+      scale_color_manual(values = palate) +
+      labs(title = paste0(input$state_state, ": Average of Polls with Error"),
+           subtitle = "Updated Last: November 13, 2019",
+           x = "Date") +
+      
+      scale_y_continuous(limits = c(0, input$zoomed_state),
+                         breaks = seq(0, input$zoomed_state, by = 5)) +
+      scale_x_date(
+        limits = c(input$stardate_state, today()),
+        breaks = date_breaks("months"),
+        labels = date_format("%b")
+      ) +
+      NULL
+    
+    }, height = 550)
+
+  
+  
+  
   
   
   
@@ -357,16 +428,8 @@ server <- function(input, output, session) {
       mutate(dist = round(dist, digits = 2))
   })
   
-  output$user_dist_df <- renderDT(user_distances()
-                                  # ,
-                                  # options = list(
-                                  #   initComplete = JS(
-                                  #     "function(settings, json) {",
-                                  #     "$(this.api().table().header()).css({'background-color': '#2c3e50', 'color': '#fff'});",
-                                  #     "}"
-                                  #   )
-                                  # )
-  )
+  output$user_dist_df <- renderDT(user_distances())
+  
   output$voronoise <- renderPlot({
     
     plt <- candidates_list_voronoi %>%
@@ -469,14 +532,7 @@ server <- function(input, output, session) {
         na.deletion = "pairwise",
         show.p = FALSE
       ) +
-      theme(
-        panel.grid.major = element_blank(),
-        axis.ticks = element_line(colour = "black"),
-        panel.background = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.key = element_blank(),
-        strip.background = element_blank()
-      )
+      theme_light()
   )
   
   
@@ -528,14 +584,7 @@ server <- function(input, output, session) {
   # Marginal Effects Plot:
   output$marginal <- renderPlot(
     plot_model(model())+
-      theme(
-        panel.grid.major = element_blank(),
-        axis.ticks = element_line(colour = "black"),
-        panel.background = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.key = element_blank(),
-        strip.background = element_blank()
-      ) 
+      theme_light()
   )
   
   output$model <- renderPrint({
@@ -584,34 +633,20 @@ server <- function(input, output, session) {
   })
   
   
-  
+  #refactor this you fool. 
   output$bivariate <- renderPlot(if (input$rgrssn == "linear") {
     datasetInput() %>%
       ggplot(aes_string(x = indvariable(), y = depvariable())) +
       geom_point() +
       geom_smooth(method = "lm") +
-      theme(
-        panel.grid.major = element_blank(),
-        axis.ticks = element_line(colour = "black"),
-        panel.background = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.key = element_blank(),
-        strip.background = element_blank()
-      ) 
+      theme_light()
   } else if (input$rgrssn == "logistic") {
     datasetInput() %>%
       ggplot(aes_string(x = indvariable(), y = depvariable())) +
       geom_point() +
       geom_smooth(method = "glm",
                   method.args = list(family = "binomial")) +
-      theme(
-        panel.grid.major = element_blank(),
-        axis.ticks = element_line(colour = "black"),
-        panel.background = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.key = element_blank(),
-        strip.background = element_blank()
-      ) 
+      theme_light()
   } else {
     print(NULL)
   })
@@ -621,14 +656,7 @@ server <- function(input, output, session) {
       ggplot(aes_string(x = indvariable(), y = model_residuals())) +
       geom_point() +
       geom_smooth(method = "lm") +
-      theme(
-        panel.grid.major = element_blank(),
-        axis.ticks = element_line(colour = "black"),
-        panel.background = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.key = element_blank(),
-        strip.background = element_blank()
-      ) 
+      theme_light()
   } else if (input$rgrssn == "logistic") {
     print("Error is not normally distributed in logistic regression.")
   } else {
@@ -661,14 +689,7 @@ server <- function(input, output, session) {
       geom_point(alpha = 0.6) +
       geom_smooth(method = "glm",
                   method.args = list(family = "binomial")) +
-      theme(
-        panel.grid.major = element_blank(),
-        axis.ticks = element_line(colour = "black"),
-        panel.background = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.key = element_blank(),
-        strip.background = element_blank()
-      ) 
+      theme_light()
   } else {
     print(NULL)
   })
