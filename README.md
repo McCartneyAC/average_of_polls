@@ -13,7 +13,6 @@ Eventual goals:
 TODO: 
 * Delegate map (earned)
 * General Election map (Polling)
-* additional debate dates: 1/14/2020; 2/7/2020; 2/19/2020; 2/25/2020
 
 
 
