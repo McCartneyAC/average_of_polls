@@ -40,18 +40,27 @@ library(MASS)
 rcp<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/master/rcp3.csv")
 rcp_state<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/master/datasets/rcp_statewide.csv")
 
+delegates_data<-read_csv("https://raw.githubusercontent.com/McCartneyAC/average_of_polls/master/delegates_data.csv")
+
 candid_list<-c("Bennet", "Biden", "Booker", "Bullock", "Buttigieg",
-               "Castro", "deBlasio", "Gabbard", "Harris",  "Klobuchar",
-               "ORourke","Sanders","Steyer", 
+               "Castro", "deBlasio", "Delaney", "Gabbard", "Harris",  "Klobuchar",
+               "ORourke","Sanders","Steyer", "Bloomberg", "Patrick",
                "Warren", "Williamson",  "Yang")
 dbts<-list(geom_vline(xintercept = as.numeric(as.Date("2019-06-27")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-07-31")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-09-12")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-10-15")),alpha = 0.3,size = 1) ,
            geom_vline(xintercept = as.numeric(as.Date("2019-11-20")),alpha = 0.3,size = 1) ,
-           geom_vline(xintercept = as.numeric(as.Date("2019-12-19")),alpha = 0.3,size = 1) )
+           geom_vline(xintercept = as.numeric(as.Date("2019-12-19")),alpha = 0.3,size = 1) ,
+           geom_vline(xintercept = as.numeric(as.Date("2020-01-14")),alpha = 0.3,size = 1) ,
+           geom_vline(xintercept = as.numeric(as.Date("2020-02-07")),alpha = 0.3,size = 1) ,
+           geom_vline(xintercept = as.numeric(as.Date("2020-02-19")),alpha = 0.3,size = 1) ,
+           geom_vline(xintercept = as.numeric(as.Date("2020-02-25")),alpha = 0.3,size = 1) )
 
-
+palate<-c( "#115740",  "#cc5500",  "#00313c", "#e56a54",
+           "#83434e",  "#00b388",  "#f0b323", "#5b6770", 
+           "#64ccc9",  "#789D4a",  "#789f90",  "#cab64b",
+           "#183028",  "#b9975b")
 
 
 
@@ -109,16 +118,16 @@ candidates_list_voronoi <- 	tribble(
   ~candidate,~party,~leftright,~updown,
   "Bennet","Democratic",8.5,6,
   "Biden","Democratic",5.5,3.5,
-  "Booker","Democratic",4,2.5,
-  "Buttigieg/Castro","Democratic",6.5,4.5,
+#  "Booker","Democratic",4,2.5,
+  "Buttigieg","Democratic",6.5,4.5,
   "Delaney","Democratic",4,3.5,
   "Gabbard","Democratic",-1.5,-1.5,
-  "Harris","Democratic",5,4,
-  "Bullock/Klobuchar","Democratic",5,5,
+#  "Harris","Democratic",5,4,
+  "Klobuchar","Democratic",5,5,
   "Sanders","Democratic",-1.5,-1,
   "Sestak","Democratic",5.5,2,
   "Warren","Democratic",0.5,1,
-  "Williamson","Democratic",2,-1.5,
+ # "Williamson","Democratic",2,-1.5,
   "Yang","Democratic",7,1,
   "Hawkins","Green",-5,-3,
   "Vohra","Libertarian",10,1.5,
@@ -351,3 +360,4 @@ get_p_stars <- function(pval, thresholds = NULL) {
     TRUE ~ ""
   )
 }
+
