@@ -11,7 +11,6 @@ Eventual goals:
 
 
 TODO: 
-* Delegate map (earned)
 * General Election map (Polling)
 
 
