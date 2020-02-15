@@ -9,11 +9,13 @@ ui <- dashboardPage(skin = "black",
                    menuItem("About", tabName = "grand_about", icon = icon("book")),
                    tags$br(),
                    tags$h3("2020 Election:"),
-                   menuItem("National Polls", tabName = "natl_polls", icon = icon("line-chart")), #globe
+                   menuItem("General Model", tabName = "general", icon = icon("globe-americas"),
+                            badgeLabel = "pending", badgeColor = "red"),
+                   menuItem("Primary Polls", tabName = "natl_polls", icon = icon("line-chart")), #globe
                    menuItem("Primary/Caucus", tabName = "prim_cauc", icon = icon("area-chart")),
                    menuItem("Political Compass", tabName = "p_compass", icon = icon("compass")),
-                   menuItem("Modal Voter", tabName = "modal_voter", icon = icon("address-card"),
-                            badgeLabel = "pending", badgeColor = "red"),
+                 #  menuItem("Modal Voter", tabName = "modal_voter", icon = icon("address-card"),
+               #             badgeLabel = "pending", badgeColor = "red"),
                    menuItem("Delegates", tabName = "de_legates", icon = icon("bar-chart"),
                             badgeLabel = "new", badgeColor = "green"),
                    tags$h3("Regression:"),
@@ -46,7 +48,9 @@ ui <- dashboardPage(skin = "black",
       
     # 2020 Election
 
-      
+    # general
+    tabItem(tabName = "general",
+            box(title = "general_map", width = 4)),
       
       
     # # National POlls
@@ -64,9 +68,9 @@ ui <- dashboardPage(skin = "black",
                          leading candidate's best day, so toggle accordingly."),
                 selectizeInput(
                   'candids', 'Filter Candidates', choices = candid_list, multiple = TRUE, 
-                  selected = c("Biden",  "Booker", "Bloomberg", "Buttigieg", 
+                  selected = c("Biden",  "Bloomberg", "Buttigieg", 
                                "Gabbard", "Klobuchar","Sanders", "Steyer",
-                               "Warren","Patrick", "Yang")
+                               "Warren","Patrick")
                 ), 
                 helpText("Note: You can't select more than 16 candidates.")
 
@@ -178,7 +182,7 @@ ui <- dashboardPage(skin = "black",
 
 
     # # Modal Voter
-    tabItem(tabName = "modal_voter"),
+ #   tabItem(tabName = "modal_voter"),
 
 
 
@@ -188,8 +192,8 @@ ui <- dashboardPage(skin = "black",
     # # Delegates
     tabItem(tabName = "de_legates", 
             box(title = "The Delegate Hunt",
-                tags$p("When candidates start accruing delegates, this box will track them."),
-                tags$p("(But will this track superdelegates? Probably not)"),
+                tags$p("How close is each candidate to the victory conditions?"),
+                tags$p("If no candidate reaches 1990, then there will be a contested convention."),
                 plotOutput("delegatesbar")
                 ) #box
             ), #tabitem
@@ -378,7 +382,7 @@ output$delegatesbar <- renderPlot({
       theme_light() +
       scale_color_manual(values = palate) +
       labs(title = "Average of Polls with error",
-           subtitle = "Updated Last: October 21, 2019",
+           subtitle = paste0("Updated Last:   ", max(mdy(rcp2$date))),
            x = "Date") +
       
       scale_y_continuous(limits = c(0, input$zoomed),
@@ -420,7 +424,7 @@ output$delegatesbar <- renderPlot({
       theme_light() +
       scale_color_manual(values = palate) +
       labs(title = paste0(input$state_state, ": Average of Polls with Error"),
-           subtitle = "Updated Last: November 13, 2019",
+           subtitle = paste0("Updated Last:   ", max(mdy(rcp_state2$Date))),
            x = "Date") +
       
       scale_y_continuous(limits = c(0, input$zoomed_state),
