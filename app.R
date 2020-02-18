@@ -9,15 +9,15 @@ ui <- dashboardPage(skin = "black",
                    menuItem("About", tabName = "grand_about", icon = icon("book")),
                    tags$br(),
                    tags$h3("2020 Election:"),
-                   menuItem("General Model", tabName = "general", icon = icon("globe-americas"),
-                            badgeLabel = "pending", badgeColor = "red"),
                    menuItem("Primary Polls", tabName = "natl_polls", icon = icon("line-chart")), #globe
-                   menuItem("Primary/Caucus", tabName = "prim_cauc", icon = icon("area-chart")),
                    menuItem("Political Compass", tabName = "p_compass", icon = icon("compass")),
-                 #  menuItem("Modal Voter", tabName = "modal_voter", icon = icon("address-card"),
-               #             badgeLabel = "pending", badgeColor = "red"),
                    menuItem("Delegates", tabName = "de_legates", icon = icon("bar-chart"),
                             badgeLabel = "new", badgeColor = "green"),
+                   menuItem("Primary/Caucus", tabName = "prim_cauc", icon = icon("area-chart")),
+                   menuItem("General Model", tabName = "general", icon = icon("globe-americas"),
+                         badgeLabel = "pending", badgeColor = "red"),
+                 #  menuItem("Modal Voter", tabName = "modal_voter", icon = icon("address-card"),
+               #             badgeLabel = "pending", badgeColor = "red"),
                    tags$h3("Regression:"),
                    menuItem("Upload & Model", tabName = "reg_about", icon = icon("upload")),
                    menuItem("Data Set", tabName = "reg_data", icon = icon("superscript")),
@@ -69,8 +69,7 @@ ui <- dashboardPage(skin = "black",
                 selectizeInput(
                   'candids', 'Filter Candidates', choices = candid_list, multiple = TRUE, 
                   selected = c("Biden",  "Bloomberg", "Buttigieg", 
-                               "Gabbard", "Klobuchar","Sanders", "Steyer",
-                               "Warren","Patrick")
+                               "Gabbard", "Klobuchar","Sanders", "Steyer","Warren")
                 ), 
                 helpText("Note: You can't select more than 16 candidates.")
 
@@ -118,7 +117,7 @@ ui <- dashboardPage(skin = "black",
                           value = "2019-01-01"),
                 numericInput("zoomed_state", 
                              "Zoom to Percent", 
-                             value = 75),   
+                             value = 45),   
                 helpText("Note: things get a bit weird if you zoom smaller than your 
                          leading candidate's best day, so toggle accordingly."),
                 selectizeInput(
@@ -191,11 +190,20 @@ ui <- dashboardPage(skin = "black",
 
     # # Delegates
     tabItem(tabName = "de_legates", 
-            box(title = "The Delegate Hunt",
-                tags$p("How close is each candidate to the victory conditions?"),
-                tags$p("If no candidate reaches 1990, then there will be a contested convention."),
-                plotOutput("delegatesbar")
-                ) #box
+            tabsetPanel(type = "tabs",
+                        tabPanel("The Delegate Hunt",
+                                 box(
+                                 tags$p("How close is each candidate to the victory conditions?"),
+                                 tags$p("If no candidate reaches 1990, then there will be a contested convention."),
+                                 plotOutput("delegatesbar"),
+                                 width = 7
+                                 ) #box
+                                 ), #tabPanel
+                        tabPanel("Delegate Hunt by State", 
+                                 box(plotOutput("delegatesmap", width ="100%", height = "700px"), width = 12)
+                                 
+                        )#tabPanel
+            ) #tabsetpanel
             ), #tabitem
     
     
@@ -335,8 +343,16 @@ server <- function(input, output, session) {
            `Klobuchar`, `Bennet`,  `Steyer`, 
            key = "Candidate", value = "Delegates_count")   %>% 
     group_by(Candidate) %>%
-    summarize(total = sum(Delegates_count))
+    summarize(total = sum(Delegates_count, na.rm = TRUE))
+  
+  delegates_data3 <- delegates_data %>% 
+    dplyr::select(-Yang, -Steyer, -Gabbard, -Bennet, -Patrick) %>% 
+    gather(`Biden`,`Bloomberg`,  `Buttigieg`,
+           `Klobuchar`,`Sanders`, 
+           `Warren`,   
+           key = "Candidate", value = "Delegates_count")
 
+  
 output$delegatesbar <- renderPlot({
   delegates_data2 %>% 
     ggplot(aes(x = fct_reorder(Candidate, total), y = total, fill = Candidate)) +
@@ -350,8 +366,44 @@ output$delegatesbar <- renderPlot({
     theme_light() + 
     scale_fill_manual(values = palate) +
     guides(fill = FALSE) + 
+    ggplot2::theme(text = ggplot2::element_text(family = "Special Elite")) +
     geom_hline(yintercept = 1990, linetype = "dotted")
 })
+
+output$delegatesmap <- renderPlot({
+  
+  delegates_data3 %>% 
+    ggplot(aes(x = reorder_within(Candidate, by = Delegates_count, within = State),
+               # fct_reorder(Candidate, Delegates_count), 
+               y = Delegates_count, 
+               fill = Candidate,
+               label = Candidate)) +
+    geom_col() + 
+    geom_text(color = "#FFFFFF", size = 3, hjust = 0, y = 0, # aes(y = (0 + nchar(Candidate)/2))
+              family = "Special Elite"
+    ) +
+    coord_flip() +
+    labs(title = "Pledged Delegates by Candidate",
+         y = "",
+         x = ""
+         # subtitle = mccrr::wrapper("Dotted line indicates required delegates for victory")
+    ) +
+    theme_typewriter()+
+    
+    scale_x_reordered() +
+    scale_fill_manual(values = palate) +
+    facet_geo(~State, scales = "free") +
+    theme(axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          axis.ticks = element_blank(), 
+          panel.grid.major = element_blank()
+          
+    ) +
+    NULL
+})
+
+
 
   output$dt <- renderDT(rcp,
                         options = list(
@@ -392,6 +444,7 @@ output$delegatesbar <- renderPlot({
         breaks = date_breaks("months"),
         labels = date_format("%b")
       ) +
+      ggplot2::theme(text = ggplot2::element_text(family = "Special Elite")) +
       NULL
     
     
@@ -426,7 +479,7 @@ output$delegatesbar <- renderPlot({
       labs(title = paste0(input$state_state, ": Average of Polls with Error"),
            subtitle = paste0("Updated Last:   ", max(mdy(rcp_state2$Date))),
            x = "Date") +
-      
+      ggplot2::theme(text = ggplot2::element_text(family = "Special Elite")) +
       scale_y_continuous(limits = c(0, input$zoomed_state),
                          breaks = seq(0, input$zoomed_state, by = 5)) +
       scale_x_date(
@@ -475,6 +528,7 @@ output$delegatesbar <- renderPlot({
       geom_label_repel(alpha = 0.8) +
       geom_point() +
       theme_few() +
+      ggplot2::theme(text = ggplot2::element_text(family = "Special Elite")) +
       labs(
         title = "Areas of 2016 Candidates",
         subtitle = "Values from politicalcompass.org",

@@ -34,6 +34,17 @@ library(multiwayvcov)
 library(miceadds)
 library(MASS)
 
+library(drlib)
+library(geofacet)
+
+
+
+
+dir.create('~/.fonts')
+file.copy("www/SpecialElite-Regular.ttf", "~/.fonts")
+system('fc-cache -f ~/.fonts')
+
+
 #POLLING
 #
 ## Polling Data
@@ -116,18 +127,18 @@ candidates_list %>%
 
 candidates_list_voronoi <- 	tribble(
   ~candidate,~party,~leftright,~updown,
-  "Bennet","Democratic",8.5,6,
+ "Bennet","Democratic",8.5,6,
   "Biden","Democratic",5.5,3.5,
-#  "Booker","Democratic",4,2.5,
+  "Booker","Democratic",4,2.5,
   "Buttigieg","Democratic",6.5,4.5,
   "Delaney","Democratic",4,3.5,
   "Gabbard","Democratic",-1.5,-1.5,
-#  "Harris","Democratic",5,4,
+  "Harris","Democratic",5,4,
   "Klobuchar","Democratic",5,5,
   "Sanders","Democratic",-1.5,-1,
   "Sestak","Democratic",5.5,2,
   "Warren","Democratic",0.5,1,
- # "Williamson","Democratic",2,-1.5,
+  "Williamson","Democratic",2,-1.5,
   "Yang","Democratic",7,1,
   "Hawkins","Green",-5,-3,
   "Vohra","Libertarian",10,1.5,
