@@ -1,6 +1,6 @@
 # average_of_polls
 Average of Polls pulled from RCP but displayed with error
-[The Shiny App Version is Live Here.](https://acm9q.shinyapps.io/average_of_polls/)
+[The Shiny App Version is Live Here.](https://acm9q.shinyapps.io/average_of_polls/). For the time being, this project has merged with the "Back of the Envelope" project for point-and-click regression analysis. The two projects may un-merge at a future time. 
 
 
 Eventual goals: 
